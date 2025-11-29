@@ -1,0 +1,83 @@
+:root {
+  --brand-primary: #0d6efd;
+  --brand-dark: #212529;
+}
+
+/* Hero */
+.hero {
+  background: linear-gradient(180deg, rgba(13,110,253,0.08), rgba(13,110,253,0));
+}
+.hero-img {
+  max-width: 520px;
+  width: 100%;
+  object-fit: cover;
+  transition: transform 300ms ease, border-radius 300ms ease, box-shadow 300ms ease;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* Stats */
+.stat {
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+/* Cards */
+.card-img-top {
+  height: 180px;
+  object-fit: cover;
+  transition: transform 300ms ease, border-radius 300ms ease, box-shadow 300ms ease;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* Contenedores con overflow oculto para clip de escala */
+.card { overflow: hidden; }
+.hero .col-lg-6.text-center { overflow: hidden; }
+
+/* Hover: redondea, sombra y escala al 150% */
+.card-img-top:hover,
+.hero-img:hover {
+  transform: scale(1.5);
+  border-radius: 1rem;
+  box-shadow: 0 1rem 2rem rgba(33, 37, 41, 0.35);
+}
+
+/* Sombra en textos debajo de las imágenes (titles y descriptions) */
+.card .card-title,
+.card .card-text {
+  transition: text-shadow 250ms ease, color 250ms ease;
+}
+
+.card:hover .card-title,
+.card:hover .card-text {
+  text-shadow: 0 2px 6px rgba(33, 37, 41, 0.25);
+}
+
+/* Carrusel de promociones */
+.carousel-img {
+  height: 380px;
+  object-fit: cover;
+}
+.carousel-caption h5,
+.carousel-caption p {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+@media (min-width: 992px) {
+  .carousel-img { height: 520px; }
+}
+
+/* Media queries personalizados */
+@media (max-width: 768px) {
+  /* Mejorar legibilidad en móviles */
+  h1.display-5 { font-size: 2rem; }
+  .lead { font-size: 1rem; }
+  .hero { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+}
+
+@media (min-width: 992px) {
+  /* Ajustes para desktop grande */
+  .card .card-body { min-height: 150px; }
+  #nosotros .stat { font-size: 1.25rem; }
+}
