@@ -9,6 +9,7 @@ const ASSETS = [
   './assets/js/modules/metrics.js',
   './assets/js/modules/recommendation.js',
   './assets/js/modules/chart.js',
+  './assets/js/modules/onboarding.js',
   './manifest.webmanifest',
   './assets/icons/icon.svg'
 ];

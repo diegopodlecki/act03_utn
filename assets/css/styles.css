@@ -128,3 +128,104 @@ canvas {
   .card { padding: 0.85rem; }
   .btn { width: 100%; }
 }
+
+/* =========================
+   Wizard de onboarding UX
+   ========================= */
+.wizard {
+  display: grid;
+  gap: 0.9rem;
+}
+.wizard-header p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.progress-track {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(156, 163, 175, 0.25);
+  overflow: hidden;
+}
+
+.progress-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e, #38bdf8);
+  transition: width 320ms ease;
+}
+
+.wizard-step {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.wizard-label {
+  font-weight: 600;
+}
+
+.wizard-input {
+  transition: border-color 220ms ease, box-shadow 220ms ease, transform 180ms ease;
+}
+
+.wizard-input:focus {
+  outline: none;
+  border-color: rgba(56, 189, 248, 0.8);
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.18);
+}
+
+.wizard-helper {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.wizard-message {
+  opacity: 0;
+  transform: translateY(-3px);
+  transition: opacity 180ms ease, transform 180ms ease;
+  color: #4ade80;
+  font-size: 0.82rem;
+  min-height: 1.1rem;
+}
+
+.wizard-message.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.wizard-message.is-error {
+  color: var(--danger);
+}
+
+.wizard-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin-top: 0.4rem;
+}
+
+.wizard-input.is-valid {
+  border-color: rgba(74, 222, 128, 0.9);
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.12);
+}
+
+.wizard-input.is-invalid {
+  border-color: rgba(248, 113, 113, 0.9);
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.12);
+}
+
+.fade-step {
+  animation: stepFade 260ms ease;
+}
+
+@keyframes stepFade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

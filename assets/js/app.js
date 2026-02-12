@@ -3,6 +3,7 @@ import { dbApi } from './modules/db.js';
 import { bmi, estimatedBodyFat, caloriesAndMacros } from './modules/metrics.js';
 import { buildRoutine, weeklyProgression } from './modules/recommendation.js';
 import { renderWeightChart } from './modules/chart.js';
+import { createOnboardingWizard } from './modules/onboarding.js';
 
 const onboardingEl = document.querySelector('#onboarding');
 const dashboardEl = document.querySelector('#dashboard');
@@ -18,66 +19,37 @@ init();
 async function init() {
   setupTheme();
   registerSW();
+
   const profile = await dbApi.getProfile();
-  if (!profile) {
-    renderOnboarding();
+  if (!isProfileComplete(profile)) {
+    renderOnboarding(profile || {});
   } else {
     await renderDashboard(profile);
   }
 }
 
-function renderOnboarding(error = '') {
-  onboardingEl.innerHTML = `
-    <h2>Onboarding inteligente</h2>
-    <p>Configurá tu perfil para recibir un plan seguro y progresivo.</p>
-    <form id="onboarding-form" class="grid" style="grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: .7rem;">
-      <label>Edad <input name="age" type="number" min="12" max="85" required></label>
-      <label>Peso (kg) <input name="weight" type="number" min="30" max="300" step="0.1" required></label>
-      <label>Altura (cm) <input name="height" type="number" min="130" max="230" required></label>
-      <label>Objetivo
-        <select name="goal" required>
-          <option value="perder_grasa">Perder grasa</option>
-          <option value="ganar_musculo">Ganar músculo</option>
-          <option value="mantener">Mantener</option>
-        </select>
-      </label>
-      <label>Nivel
-        <select name="level" required>
-          <option value="principiante">Principiante</option>
-          <option value="intermedio">Intermedio</option>
-          <option value="avanzado">Avanzado</option>
-        </select>
-      </label>
-      <label>Lesiones <input name="injuries" maxlength="120" placeholder="Ej: rodilla izquierda"></label>
-      <label>Sexo (opcional)
-        <select name="sex">
-          <option value="no_especificado">Prefiero no decir</option>
-          <option value="masculino">Masculino</option>
-          <option value="femenino">Femenino</option>
-        </select>
-      </label>
-      <div style="grid-column: 1 / -1;" class="error">${error}</div>
-      <button class="btn" type="submit" style="grid-column: 1 / -1;">Crear mi plan</button>
-    </form>
-  `;
+function isProfileComplete(profile) {
+  return Boolean(
+    profile &&
+      Number.isFinite(Number(profile.age)) &&
+      Number.isFinite(Number(profile.weight)) &&
+      Number.isFinite(Number(profile.height)) &&
+      profile.goal &&
+      profile.level
+  );
+}
 
-  document.querySelector('#onboarding-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    try {
-      const fd = new FormData(e.target);
-      const profile = {
-        age: toNumber(fd.get('age'), 12, 85),
-        weight: toNumber(fd.get('weight'), 30, 300),
-        height: toNumber(fd.get('height'), 130, 230),
-        goal: sanitizeText(fd.get('goal')),
-        level: sanitizeText(fd.get('level')),
-        injuries: sanitizeText(fd.get('injuries')),
-        sex: sanitizeText(fd.get('sex'))
-      };
+function renderOnboarding(initialProfile) {
+  onboardingEl.classList.remove('hidden');
+  dashboardEl.classList.add('hidden');
+
+  createOnboardingWizard({
+    container: onboardingEl,
+    initialProfile,
+    dbApi,
+    onComplete: async (profile) => {
       await dbApi.saveProfile(profile);
       await renderDashboard(profile);
-    } catch (err) {
-      renderOnboarding(err.message);
     }
   });
 }
@@ -152,7 +124,10 @@ function renderHistory(sessions) {
     .slice()
     .reverse()
     .slice(0, 8)
-    .map((s) => `<li><strong>${s.date}</strong> · ${s.weight} kg · ${s.duration} min<br><small>${s.notes || 'Sin notas'}</small></li>`)
+    .map(
+      (s) =>
+        `<li><strong>${s.date}</strong> · ${s.weight} kg · ${s.duration} min<br><small>${s.notes || 'Sin notas'}</small></li>`
+    )
     .join('');
 }
 

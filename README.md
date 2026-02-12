@@ -31,6 +31,7 @@ Plataforma web fitness inspirada en workout.cool, optimizada para principiantes 
             ├── sanitize.js
             ├── metrics.js
             ├── recommendation.js
+            ├── onboarding.js
             └── chart.js
 ```
 
@@ -47,6 +48,7 @@ Plataforma web fitness inspirada en workout.cool, optimizada para principiantes 
 - `sanitize.js`: sanitización y validación numérica estricta.
 - `metrics.js`: cálculo de IMC, grasa estimada y calorías/macros.
 - `recommendation.js`: lógica de rutina inteligente + progresión semanal.
+- `onboarding.js`: wizard interactivo por pasos con barra de progreso, autosave y validación en vivo.
 - `chart.js`: render de gráfico de evolución de peso en canvas.
 - `sw.js`: cache offline y estrategia cache-first con fallback.
 
@@ -59,7 +61,7 @@ Plataforma web fitness inspirada en workout.cool, optimizada para principiantes 
 
 ## Funcionalidades incluidas
 
-- Onboarding obligatorio (edad, peso, altura, objetivo, nivel, lesiones, sexo opcional).
+- Onboarding obligatorio tipo wizard (paso a paso, feedback visual y guardado automático por paso).
 - Ajuste de volumen/intensidad según nivel.
 - Explicación de cada ejercicio recomendado.
 - Registro de sesiones y evolución en gráfico.
