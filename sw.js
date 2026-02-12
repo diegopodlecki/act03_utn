@@ -12,8 +12,10 @@ const ASSETS = [
   './assets/js/modules/chart.js',
   './assets/js/modules/onboarding.js',
   './assets/js/modules/timer.js',
+  './assets/js/modules/exercises.js',
   './manifest.webmanifest',
-  './assets/icons/icon.svg'
+  './assets/icons/icon.svg',
+  './assets/data/exercises.json'
 ];
 
 self.addEventListener('install', (event) => {

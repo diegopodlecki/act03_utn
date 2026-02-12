@@ -24,6 +24,7 @@ Plataforma web fitness inspirada en workout.cool, optimizada para principiantes 
 └── assets/
     ├── css/styles.css
     ├── icons/icon.svg
+    ├── data/exercises.json
     └── js/
         ├── app.js
         └── modules/
@@ -72,6 +73,7 @@ Plataforma web fitness inspirada en workout.cool, optimizada para principiantes 
 - Panel de métricas (peso, IMC, grasa estimada, calorías y macros).
 - Historial de entrenamientos.
 - Temporizador por ejercicio y descanso automático con persistencia de tiempo real en historial.
+- Biblioteca de ejercicios con modal elegante y carga diferida.
 - PWA instalable + funcionamiento offline.
 - Diseño responsive, premium y amigable para principiantes.
 

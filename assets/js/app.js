@@ -5,6 +5,7 @@ import { buildRoutineWithProgression, weeklyProgression } from './modules/recomm
 import { renderWeightChart } from './modules/chart.js';
 import { createOnboardingWizard } from './modules/onboarding.js';
 import { createTrainingTimer } from './modules/timer.js';
+import { createExerciseLibrary } from './modules/exercises.js';
 
 const onboardingEl = document.querySelector('#onboarding');
 const dashboardEl = document.querySelector('#dashboard');
@@ -15,8 +16,11 @@ const profileSummary = document.querySelector('#profile-summary');
 const chart = document.querySelector('#progress-chart');
 const themeBtn = document.querySelector('#theme-toggle');
 const timerPanel = document.querySelector('#timer-panel');
+const exerciseLibraryEl = document.querySelector('#exercise-library');
+const exerciseModalEl = document.querySelector('#exercise-modal');
 
 let timerController = null;
+let exercisesBootstrapped = false;
 let timerSnapshot = {
   activeExerciseSec: 0,
   restSec: 0,
@@ -64,6 +68,38 @@ function renderOnboarding(initialProfile) {
   });
 }
 
+function initExerciseLibraryLazy() {
+  if (exercisesBootstrapped || !exerciseLibraryEl || !exerciseModalEl) return;
+
+  const boot = () => {
+    if (exercisesBootstrapped) return;
+    exercisesBootstrapped = true;
+    createExerciseLibrary({
+      container: exerciseLibraryEl,
+      modalRoot: exerciseModalEl,
+      routineContainer: routineList
+    }).catch(() => {
+      exerciseLibraryEl.innerHTML = '<p class="error">No se pudo cargar la biblioteca de ejercicios.</p>';
+    });
+  };
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        boot();
+        observer.disconnect();
+      }
+    });
+    observer.observe(exerciseLibraryEl);
+  }
+
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(() => boot(), { timeout: 2000 });
+  } else {
+    window.setTimeout(boot, 800);
+  }
+}
+
 async function renderDashboard(profile) {
   onboardingEl.classList.add('hidden');
   dashboardEl.classList.remove('hidden');
@@ -84,6 +120,8 @@ async function renderDashboard(profile) {
       }
     });
   }
+
+  initExerciseLibraryLazy();
 
   const sessions = await dbApi.getSessions();
   const latestWeight = sessions.at(-1)?.weight ?? profile.weight;
@@ -145,7 +183,7 @@ function renderRoutine(profile, sessions, prog) {
   routineList.innerHTML = adjusted.routine
     .map(
       (item) =>
-        `<li><strong>${item.name}</strong> · ${item.sets}x${item.reps} · ${item.loadKg} kg<br><small>${item.reason}</small><br><small>${item.progressionNote}</small></li>`
+        `<li><strong>${item.name}</strong> · ${item.sets}x${item.reps} · ${item.loadKg} kg<br><small>${item.reason}</small><br><small>${item.progressionNote}</small><br><button class="btn btn-ghost" type="button" data-exercise-name="${item.name}">Ver ejercicio</button></li>`
     )
     .join('');
 

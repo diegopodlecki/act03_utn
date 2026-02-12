@@ -71,12 +71,30 @@
             <div id="timer-panel"></div>
           </div>
 
+
+          <div class="panel">
+            <h3>Biblioteca de ejercicios</h3>
+            <div id="exercise-library"></div>
+          </div>
+
           <div class="panel">
             <h3>Historial reciente</h3>
             <ul id="history-list" class="stack"></ul>
           </div>
         </section>
       </main>
+    </div>
+
+
+    <div id="exercise-modal" class="exercise-modal" aria-hidden="true">
+      <div class="exercise-modal-backdrop"></div>
+      <div class="exercise-modal-content" role="dialog" aria-modal="true" aria-label="Detalle de ejercicio">
+        <button class="exercise-modal-close" type="button" data-modal-close>✕</button>
+        <h3 data-modal-title>Ejercicio</h3>
+        <p class="exercise-modal-meta" data-modal-meta></p>
+        <p data-modal-body></p>
+        <div data-modal-video></div>
+      </div>
     </div>
 
     <script type="module" src="assets/js/app.js"></script>

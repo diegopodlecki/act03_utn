@@ -303,3 +303,100 @@ canvas {
   background: rgba(56, 189, 248, 0.25);
   border-color: rgba(56, 189, 248, 0.55);
 }
+
+/* =========================
+   Biblioteca de ejercicios + modal
+   ========================= */
+.exercise-controls {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+.exercise-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.7rem;
+}
+.exercise-card {
+  border: 1px solid rgba(156, 163, 175, 0.25);
+  border-radius: 12px;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.03);
+  display: grid;
+  gap: 0.45rem;
+}
+.exercise-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+.exercise-card h4 {
+  margin: 0;
+  font-size: 1rem;
+}
+.exercise-card p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.exercise-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 40;
+}
+.exercise-modal.is-open {
+  display: grid;
+  place-items: center;
+}
+.exercise-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.75);
+  backdrop-filter: blur(2px);
+  animation: fadeIn 180ms ease;
+}
+.exercise-modal-content {
+  position: relative;
+  width: min(680px, 92vw);
+  max-height: 88vh;
+  overflow: auto;
+  border-radius: 16px;
+  padding: 1rem;
+  background: linear-gradient(180deg, var(--surface), var(--surface-2));
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(156, 163, 175, 0.28);
+  animation: modalUp 220ms ease;
+}
+.exercise-modal-close {
+  position: absolute;
+  right: 0.8rem;
+  top: 0.8rem;
+  border: 0;
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+.exercise-modal-meta {
+  font-size: 0.9rem;
+  margin-bottom: 0.45rem;
+}
+.exercise-video-frame {
+  width: 100%;
+  min-height: 280px;
+  border: 0;
+  border-radius: 12px;
+  margin-top: 0.6rem;
+}
+
+@keyframes modalUp {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 700px) {
+  .exercise-controls { grid-template-columns: 1fr; }
+}
