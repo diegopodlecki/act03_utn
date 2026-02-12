@@ -1,7 +1,7 @@
 import { sanitizeText, toNumber } from './modules/sanitize.js';
 import { dbApi } from './modules/db.js';
 import { bmi, estimatedBodyFat, caloriesAndMacros } from './modules/metrics.js';
-import { buildRoutine, weeklyProgression } from './modules/recommendation.js';
+import { buildRoutineWithProgression, weeklyProgression } from './modules/recommendation.js';
 import { renderWeightChart } from './modules/chart.js';
 import { createOnboardingWizard } from './modules/onboarding.js';
 
@@ -77,7 +77,7 @@ async function renderDashboard(profile) {
     progresión: `x${prog.volumeFactor}`
   });
 
-  renderRoutine(profile, prog);
+  renderRoutine(profile, sessions, prog);
   renderHistory(sessions);
   renderWeightChart(chart, sessions);
 
@@ -89,6 +89,8 @@ async function renderDashboard(profile) {
         date: sanitizeText(fd.get('date')),
         weight: toNumber(fd.get('weight'), 30, 350),
         duration: toNumber(fd.get('duration'), 5, 300),
+        failCount: toNumber(fd.get('failCount'), 0, 10),
+        completedAllSets: fd.get('completedAllSets') === 'on',
         notes: sanitizeText(fd.get('notes'))
       });
       e.target.reset();
@@ -105,13 +107,17 @@ function renderMetrics(data) {
     .join('');
 }
 
-function renderRoutine(profile, prog) {
-  const routine = buildRoutine(profile);
-  routineList.innerHTML = routine
+function renderRoutine(profile, sessions, prog) {
+  const adjusted = buildRoutineWithProgression(profile, sessions);
+
+  routineList.innerHTML = adjusted.routine
     .map(
-      (item) => `<li><strong>${item.name}</strong> · ${item.sets}x${item.reps}<br><small>${item.reason}</small></li>`
+      (item) =>
+        `<li><strong>${item.name}</strong> · ${item.sets}x${item.reps} · ${item.loadKg} kg<br><small>${item.reason}</small><br><small>${item.progressionNote}</small></li>`
     )
     .join('');
+
+  routineList.insertAdjacentHTML('beforeend', `<li><span class="tag">${adjusted.context.explanation}</span></li>`);
   routineList.insertAdjacentHTML('beforeend', `<li><span class="tag">${prog.note}</span></li>`);
 }
 
@@ -126,7 +132,9 @@ function renderHistory(sessions) {
     .slice(0, 8)
     .map(
       (s) =>
-        `<li><strong>${s.date}</strong> · ${s.weight} kg · ${s.duration} min<br><small>${s.notes || 'Sin notas'}</small></li>`
+        `<li><strong>${s.date}</strong> · ${s.weight} kg · ${s.duration} min · fallos: ${s.failCount ?? 0}<br><small>${
+          s.completedAllSets ? 'Completó todas las series.' : 'No completó todas las series.'
+        }</small><br><small>${s.notes || 'Sin notas'}</small></li>`
     )
     .join('');
 }

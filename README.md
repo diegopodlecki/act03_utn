@@ -31,6 +31,7 @@ Plataforma web fitness inspirada en workout.cool, optimizada para principiantes 
             ├── sanitize.js
             ├── metrics.js
             ├── recommendation.js
+            ├── progression.js
             ├── onboarding.js
             └── chart.js
 ```
@@ -47,7 +48,8 @@ Plataforma web fitness inspirada en workout.cool, optimizada para principiantes 
 - `db.js`: acceso a IndexedDB con stores `profile` y `sessions`.
 - `sanitize.js`: sanitización y validación numérica estricta.
 - `metrics.js`: cálculo de IMC, grasa estimada y calorías/macros.
-- `recommendation.js`: lógica de rutina inteligente + progresión semanal.
+- `recommendation.js`: arma rutina base y aplica progresión automática según historial.
+- `progression.js`: algoritmo de auto-progresión (+5% carga, -10% volumen, deload semana 4, ajuste por nivel).
 - `onboarding.js`: wizard interactivo por pasos con barra de progreso, autosave y validación en vivo.
 - `chart.js`: render de gráfico de evolución de peso en canvas.
 - `sw.js`: cache offline y estrategia cache-first con fallback.
@@ -69,3 +71,26 @@ Plataforma web fitness inspirada en workout.cool, optimizada para principiantes 
 - Historial de entrenamientos.
 - PWA instalable + funcionamiento offline.
 - Diseño responsive, premium y amigable para principiantes.
+
+
+## Ejemplo de progresión (antes/después)
+
+```js
+const before = {
+  routine: [
+    { name: "Sentadilla", sets: 4, reps: 8, loadKg: 60 },
+    { name: "Press pecho", sets: 4, reps: 8, loadKg: 50 }
+  ],
+  sessions: [{ completedAllSets: true, failCount: 0 }],
+  level: "intermedio"
+};
+
+// Después de aplicar progression.js
+const after = {
+  routine: [
+    { name: "Sentadilla", sets: 4, reps: 8, loadKg: 63, progressionNote: "Aumentamos carga porque completaste tu rutina anterior." },
+    { name: "Press pecho", sets: 4, reps: 8, loadKg: 52.5, progressionNote: "Aumentamos carga porque completaste tu rutina anterior." }
+  ],
+  context: { explanation: "Aumentamos carga porque completaste tu rutina anterior" }
+};
+```

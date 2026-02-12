@@ -50,6 +50,14 @@
                 Notas de sesión
                 <textarea name="notes" maxlength="280" placeholder="¿Cómo te sentiste hoy?"></textarea>
               </label>
+              <label>
+                Fallos en series (0-10)
+                <input type="number" name="failCount" min="0" max="10" value="0" required />
+              </label>
+              <label class="inline-check">
+                <input type="checkbox" name="completedAllSets" />
+                Completé todas las series
+              </label>
               <button class="btn" type="submit">Guardar entrenamiento</button>
             </form>
           </div>

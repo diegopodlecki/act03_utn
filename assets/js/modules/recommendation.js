@@ -1,3 +1,5 @@
+import { applyProgressionToRoutine } from './progression.js';
+
 const baseExercises = {
   perder_grasa: ['Sentadilla goblet', 'Remo con banda', 'Zancadas', 'Plancha', 'Burpees suaves'],
   ganar_musculo: ['Sentadilla', 'Press pecho', 'Peso muerto rumano', 'Dominadas asistidas', 'Press militar'],
@@ -16,10 +18,18 @@ export function buildRoutine(profile) {
     name,
     sets: baseSets + (i % 2),
     reps: baseReps + i,
-    reason: profile.goal === 'perder_grasa'
-      ? 'Alta activación metabólica y gasto calórico.'
-      : 'Estimula hipertrofia y progreso de fuerza.'
+    loadKg: Math.round(20 + i * 2 + mult * 5),
+    reason:
+      profile.goal === 'perder_grasa'
+        ? 'Alta activación metabólica y gasto calórico.'
+        : 'Estimula hipertrofia y progreso de fuerza.'
   }));
+}
+
+// Integra la rutina base con la progresión automática usando historial de IndexedDB.
+export function buildRoutineWithProgression(profile, sessions = []) {
+  const baseRoutine = buildRoutine(profile);
+  return applyProgressionToRoutine({ routine: baseRoutine, sessions, level: profile.level });
 }
 
 export function weeklyProgression(profile, weekIndex = 1) {

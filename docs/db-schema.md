@@ -23,6 +23,8 @@
   - `weight: number`
   - `duration: number`
   - `notes: string`
+  - `failCount: number`
+  - `completedAllSets: boolean`
 
 ## Justificación
 

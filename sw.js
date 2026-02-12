@@ -8,6 +8,7 @@ const ASSETS = [
   './assets/js/modules/sanitize.js',
   './assets/js/modules/metrics.js',
   './assets/js/modules/recommendation.js',
+  './assets/js/modules/progression.js',
   './assets/js/modules/chart.js',
   './assets/js/modules/onboarding.js',
   './manifest.webmanifest',

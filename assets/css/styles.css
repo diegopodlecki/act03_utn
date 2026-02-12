@@ -83,6 +83,15 @@ input, select, textarea {
 }
 textarea { min-height: 70px; resize: vertical; }
 
+.inline-check {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+.inline-check input {
+  width: auto;
+}
+
 .btn {
   border: none;
   border-radius: 12px;
