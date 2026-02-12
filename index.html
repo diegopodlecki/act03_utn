@@ -1,207 +1,102 @@
 <!doctype html>
 <html lang="es">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Heladería Artesanal</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111827" />
+    <title>FitForge PWA | Entrenamiento Inteligente</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
   </head>
   <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-light sticky-top shadow-sm">
-      <div class="container">
-        <a class="navbar-brand fw-bold" href="#">Heladería Artesanal</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a class="nav-link" href="#promos">Promos</a></li>
-            <li class="nav-item"><a class="nav-link" href="#sabores">Sabores</a></li>
-            <li class="nav-item"><a class="nav-link" href="#nosotros">Nosotros</a></li>
-            <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <div class="app-shell">
+      <header class="topbar">
+        <h1>FitForge</h1>
+        <button id="theme-toggle" class="btn btn-ghost" type="button">🌙</button>
+      </header>
 
-    <!-- Hero -->
-    <section class="hero d-flex align-items-center py-5">
-      <div class="container">
-        <div class="row align-items-center g-4">
-          <div class="col-12 col-lg-6">
-            <h1 class="display-5 fw-bold">Helados 100% artesanales</h1>
-            <p class="lead text-muted">Ingredientes naturales, recetas familiares y pasión por el sabor en cada bocha.</p>
-            <div class="d-flex gap-2 flex-wrap">
-              <a class="btn btn-primary btn-lg" href="#sabores">Ver sabores</a>
-              <a class="btn btn-outline-primary btn-lg" href="#nosotros">Conocer más</a>
-            </div>
-          </div>
-          <div class="col-12 col-lg-6 text-center d-none d-md-block">
-            <img class="hero-img rounded-4 shadow" src="pexels-theshuttervision-10175400.jpg" alt="Helado artesanal" />
-          </div>
-        </div>
-      </div>
-    </section>
+      <main>
+        <section id="onboarding" class="card" aria-live="polite"></section>
 
-    <!-- Promos -->
-    <section id="promos" class="py-5">
-      <div class="container">
-        <div class="row mb-4">
-          <div class="col">
-            <h2 class="h3 fw-bold">Promociones</h2>
-            <p class="text-muted">Descubrí nuestras promos de la semana.</p>
+        <section id="dashboard" class="card hidden">
+          <div class="section-head">
+            <h2>Panel de progreso</h2>
+            <p id="profile-summary"></p>
           </div>
-        </div>
-        <div id="promosCarousel" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-indicators">
-            <button type="button" data-bs-target="#promosCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Promo 1"></button>
-            <button type="button" data-bs-target="#promosCarousel" data-bs-slide-to="1" aria-label="Promo 2"></button>
-            <button type="button" data-bs-target="#promosCarousel" data-bs-slide-to="2" aria-label="Promo 3"></button>
-          </div>
-          <div class="carousel-inner rounded-4 shadow-sm overflow-hidden">
-            <div class="carousel-item active">
-              <img src="ddlehce.jpg" class="d-block w-100 carousel-img" alt="2x1 Dulce de leche" loading="lazy">
-              <div class="carousel-caption d-none d-md-block">
-                <h5>2x1 en Dulce de Leche</h5>
-                <p>Martes y jueves, todo el día.</p>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <img src="choco.jpg" class="d-block w-100 carousel-img" alt="Chocolate intenso promo" loading="lazy">
-              <div class="carousel-caption d-none d-md-block">
-                <h5>Chocolate Intenso: llevá 3, pagá 2</h5>
-                <p>Fin de semana de choco lovers.</p>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <img src="frutosRojos.jpg" class="d-block w-100 carousel-img" alt="Frutos rojos de estación" loading="lazy">
-              <div class="carousel-caption d-none d-md-block">
-                <h5>Frutos Rojos de estación</h5>
-                <p>Precio especial todo el mes.</p>
-              </div>
-            </div>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#promosCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Anterior</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#promosCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Siguiente</span>
-          </button>
-        </div>
-      </div>
-    </section>
+          <div class="grid metrics-grid" id="metrics-cards"></div>
 
-    <!-- Sabores -->
-    <section id="sabores" class="py-5">
-      <div class="container">
-        <div class="row mb-4">
-          <div class="col">
-            <h2 class="h3 fw-bold">Nuestros sabores</h2>
-            <p class="text-muted">Clásicos y de estación, hechos con materia prima local.</p>
+          <div class="panel">
+            <h3>Evolución de peso</h3>
+            <canvas id="progress-chart" width="600" height="240" aria-label="Gráfico de evolución"></canvas>
           </div>
-        </div>
-        <div class="row g-4">
-          <div class="col-12 col-sm-6 col-lg-4">
-            <div class="card h-100">
-              <img src="ddlehce.jpg" class="card-img-top" alt="Dulce de leche" />
-              <div class="card-body">
-                <h5 class="card-title">Dulce de leche</h5>
-                <p class="card-text text-muted">El favorito de siempre, cremoso y con notas acarameladas.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-sm-6 col-lg-4">
-            <div class="card h-100">
-              <img src="choco.jpg" class="card-img-top" alt="Chocolate intenso" />
-              <div class="card-body">
-                <h5 class="card-title">Chocolate intenso</h5>
-                <p class="card-text text-muted">Cacao premium 70%, para amantes del chocolate.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-sm-6 col-lg-4">
-            <div class="card h-100">
-              <img src="frutosRojos.jpg" class="card-img-top" alt="Frutos rojos" />
-              <div class="card-body">
-                <h5 class="card-title">Frutos rojos</h5>
-                <p class="card-text text-muted">Frambuesas y arándanos patagónicos, frescos y vibrantes.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- Nosotros -->
-    <section id="nosotros" class="py-5 bg-light">
-      <div class="container">
-        <div class="row align-items-center g-4">
-          <div class="col-12 col-lg-6">
-            <h2 class="h3 fw-bold">Hecho a mano, todos los días</h2>
-            <p class="text-muted">Somos una heladería familiar que elabora helados en pequeñas tandas, priorizando la calidad sobre la cantidad. Utilizamos frutas de estación, leche fresca y técnicas artesanales para lograr una textura cremosa y sabores auténticos.</p>
-          </div>
-          <div class="col-12 col-lg-6">
-            <div class="p-4 rounded-4 bg-white shadow-sm">
-              <div class="row text-center">
-                <div class="col-4">
-                  <div class="stat">15+</div>
-                  <div class="text-muted">Sabores</div>
-                </div>
-                <div class="col-4">
-                  <div class="stat">100%</div>
-                  <div class="text-muted">Artesanal</div>
-                </div>
-                <div class="col-4">
-                  <div class="stat">Desde 1998</div>
-                  <div class="text-muted">Tradición</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contacto -->
-    <section id="contacto" class="py-5">
-      <div class="container">
-        <div class="row g-4 align-items-center">
-          <div class="col-12 col-md-6">
-            <h2 class="h3 fw-bold">Encontranos y hacé tu pedido</h2>
-            <p class="text-muted">Av. Sabor 123, Ciudad. Abierto de martes a domingo, 12:00 a 23:00.</p>
-          </div>
-          <div class="col-12 col-md-6">
-            <form class="row g-2">
-              <div class="col-12 col-sm-6">
-                <input type="text" class="form-control" placeholder="Nombre" aria-label="Nombre">
-              </div>
-              <div class="col-12 col-sm-6">
-                <input type="email" class="form-control" placeholder="Email" aria-label="Email">
-              </div>
-              <div class="col-12">
-                <textarea class="form-control" rows="3" placeholder="Tu mensaje"></textarea>
-              </div>
-              <div class="col-12">
-                <button type="submit" class="btn btn-primary">Enviar</button>
-              </div>
+          <div class="panel">
+            <h3>Registrar sesión</h3>
+            <form id="session-form" class="stack">
+              <label>
+                Fecha
+                <input type="date" name="date" required />
+              </label>
+              <label>
+                Peso corporal (kg)
+                <input type="number" name="weight" min="30" max="350" step="0.1" required />
+              </label>
+              <label>
+                Tiempo entrenado (min)
+                <input type="number" name="duration" min="5" max="300" required />
+              </label>
+              <label>
+                Notas de sesión
+                <textarea name="notes" maxlength="280" placeholder="¿Cómo te sentiste hoy?"></textarea>
+              </label>
+              <label>
+                Fallos en series (0-10)
+                <input type="number" name="failCount" min="0" max="10" value="0" required />
+              </label>
+              <label class="inline-check">
+                <input type="checkbox" name="completedAllSets" />
+                Completé todas las series
+              </label>
+              <button class="btn" type="submit">Guardar entrenamiento</button>
             </form>
           </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="py-4 bg-dark text-white-50">
-      <div class="container d-flex justify-content-between align-items-center">
-        <small>© 2025 Heladería Artesanal</small>
-        <small>Hecho con Bootstrap</small>
-      </div>
-    </footer>
+          <div class="panel">
+            <h3>Rutina recomendada de la semana</h3>
+            <ul id="routine-list" class="stack"></ul>
+          </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+          <div class="panel">
+            <div id="timer-panel"></div>
+          </div>
+
+
+          <div class="panel">
+            <h3>Biblioteca de ejercicios</h3>
+            <div id="exercise-library"></div>
+          </div>
+
+          <div class="panel">
+            <h3>Historial reciente</h3>
+            <ul id="history-list" class="stack"></ul>
+          </div>
+        </section>
+      </main>
+    </div>
+
+
+    <div id="exercise-modal" class="exercise-modal" aria-hidden="true">
+      <div class="exercise-modal-backdrop"></div>
+      <div class="exercise-modal-content" role="dialog" aria-modal="true" aria-label="Detalle de ejercicio">
+        <button class="exercise-modal-close" type="button" data-modal-close>✕</button>
+        <h3 data-modal-title>Ejercicio</h3>
+        <p class="exercise-modal-meta" data-modal-meta></p>
+        <p data-modal-body></p>
+        <div data-modal-video></div>
+      </div>
+    </div>
+
+    <script type="module" src="assets/js/app.js"></script>
   </body>
-  </html>
+</html>

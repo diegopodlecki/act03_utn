@@ -1,0 +1,50 @@
+[
+  {
+    "id": "sentadilla",
+    "nombre": "Sentadilla",
+    "grupoMuscular": "Piernas y glúteos",
+    "nivel": "principiante",
+    "instrucciones": "Separá los pies al ancho de hombros, bajá con pecho alto y rodillas alineadas con la punta de los pies. Subí empujando el piso con todo el pie.",
+    "videoYoutubeEmbed": "https://www.youtube.com/embed/aclHkVaku9U"
+  },
+  {
+    "id": "press-pecho",
+    "nombre": "Press pecho",
+    "grupoMuscular": "Pecho y tríceps",
+    "nivel": "intermedio",
+    "instrucciones": "Escápulas retraídas en el banco, controlá la bajada y empujá la barra en línea recta sin despegar glúteos del banco.",
+    "videoYoutubeEmbed": "https://www.youtube.com/embed/rT7DgCr-3pg"
+  },
+  {
+    "id": "remo",
+    "nombre": "Remo con mancuerna",
+    "grupoMuscular": "Espalda",
+    "nivel": "principiante",
+    "instrucciones": "Mantené la espalda neutra, tirá con el codo hacia la cadera y evitá rotar el tronco durante la repetición.",
+    "videoYoutubeEmbed": "https://www.youtube.com/embed/pYcpY20QaE8"
+  },
+  {
+    "id": "peso-muerto-rumano",
+    "nombre": "Peso muerto rumano",
+    "grupoMuscular": "Isquiotibiales y glúteos",
+    "nivel": "intermedio",
+    "instrucciones": "Deslizá la cadera hacia atrás con espalda neutra y barra pegada al cuerpo. Frená al sentir tensión en isquios.",
+    "videoYoutubeEmbed": "https://www.youtube.com/embed/2SHsk9AzdjA"
+  },
+  {
+    "id": "plancha",
+    "nombre": "Plancha",
+    "grupoMuscular": "Core",
+    "nivel": "principiante",
+    "instrucciones": "Alineá hombros-cadera-tobillos, activá abdomen y glúteos, respirá controlado sin elevar la cadera.",
+    "videoYoutubeEmbed": ""
+  },
+  {
+    "id": "press-militar",
+    "nombre": "Press militar",
+    "grupoMuscular": "Hombros",
+    "nivel": "avanzado",
+    "instrucciones": "Apretá abdomen y glúteos, barra cerca del rostro al subir y bloqueá arriba sin hiperextender la zona lumbar.",
+    "videoYoutubeEmbed": "https://www.youtube.com/embed/2yjwXTZQDDI"
+  }
+]

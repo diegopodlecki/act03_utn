@@ -1,0 +1,402 @@
+:root {
+  color-scheme: dark;
+  --bg: #0b1020;
+  --surface: #111827;
+  --surface-2: #1f2937;
+  --text: #f3f4f6;
+  --muted: #9ca3af;
+  --accent: #22c55e;
+  --accent-2: #38bdf8;
+  --danger: #f87171;
+  --radius: 16px;
+  --shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f3f4f6;
+  --surface: #ffffff;
+  --surface-2: #e5e7eb;
+  --text: #111827;
+  --muted: #4b5563;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: radial-gradient(circle at top, #18223f, var(--bg));
+  color: var(--text);
+}
+
+.app-shell {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+h1, h2, h3 { margin: 0 0 0.5rem; }
+p { color: var(--muted); margin-top: 0; }
+
+.card {
+  background: linear-gradient(180deg, var(--surface), var(--surface-2));
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 1rem;
+  animation: fadeIn 0.3s ease;
+}
+.panel {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.grid { display: grid; gap: 0.8rem; }
+.metrics-grid { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
+.metric {
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  border-radius: 12px;
+  padding: 0.8rem;
+}
+.metric strong { display: block; font-size: 1.2rem; margin-top: 0.25rem; }
+
+.stack { display: flex; flex-direction: column; gap: 0.75rem; list-style: none; padding: 0; margin: 0; }
+label { display: grid; gap: 0.35rem; font-size: 0.95rem; }
+input, select, textarea {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgba(156, 163, 175, 0.4);
+  padding: 0.65rem;
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--text);
+}
+textarea { min-height: 70px; resize: vertical; }
+
+.inline-check {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+.inline-check input {
+  width: auto;
+}
+
+.btn {
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(120deg, var(--accent), var(--accent-2));
+  color: #052e16;
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: transform .2s ease, filter .2s ease;
+}
+.btn:hover { transform: translateY(-1px); filter: brightness(1.1); }
+.btn-ghost {
+  background: transparent;
+  border: 1px solid rgba(156,163,175,0.5);
+  color: var(--text);
+}
+
+.tag {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.8rem;
+  background: rgba(56, 189, 248, .2);
+  border: 1px solid rgba(56, 189, 248, .5);
+}
+.error { color: var(--danger); font-size: .9rem; }
+.hidden { display: none; }
+
+canvas {
+  width: 100%;
+  max-height: 240px;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.2);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .app-shell { padding: 0.7rem; }
+  .card { padding: 0.85rem; }
+  .btn { width: 100%; }
+}
+
+/* =========================
+   Wizard de onboarding UX
+   ========================= */
+.wizard {
+  display: grid;
+  gap: 0.9rem;
+}
+.wizard-header p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.progress-track {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(156, 163, 175, 0.25);
+  overflow: hidden;
+}
+
+.progress-fill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e, #38bdf8);
+  transition: width 320ms ease;
+}
+
+.wizard-step {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.wizard-label {
+  font-weight: 600;
+}
+
+.wizard-input {
+  transition: border-color 220ms ease, box-shadow 220ms ease, transform 180ms ease;
+}
+
+.wizard-input:focus {
+  outline: none;
+  border-color: rgba(56, 189, 248, 0.8);
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.18);
+}
+
+.wizard-helper {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.wizard-message {
+  opacity: 0;
+  transform: translateY(-3px);
+  transition: opacity 180ms ease, transform 180ms ease;
+  color: #4ade80;
+  font-size: 0.82rem;
+  min-height: 1.1rem;
+}
+
+.wizard-message.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.wizard-message.is-error {
+  color: var(--danger);
+}
+
+.wizard-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin-top: 0.4rem;
+}
+
+.wizard-input.is-valid {
+  border-color: rgba(74, 222, 128, 0.9);
+  box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.12);
+}
+
+.wizard-input.is-invalid {
+  border-color: rgba(248, 113, 113, 0.9);
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.12);
+}
+
+.fade-step {
+  animation: stepFade 260ms ease;
+}
+
+@keyframes stepFade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   Timer entrenamiento
+   ========================= */
+.timer-card {
+  display: grid;
+  gap: 0.8rem;
+}
+.timer-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.timer-config {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+.timer-visual-wrap {
+  position: relative;
+  width: 180px;
+  margin: 0 auto;
+}
+.timer-ring {
+  width: 180px;
+  height: 180px;
+  transform: rotate(-90deg);
+}
+.timer-ring-bg,
+.timer-ring-progress {
+  fill: none;
+  stroke-width: 8;
+}
+.timer-ring-bg {
+  stroke: rgba(156, 163, 175, 0.25);
+}
+.timer-ring-progress {
+  stroke: #22c55e;
+  stroke-linecap: round;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.35s linear, stroke 0.2s ease;
+}
+.timer-readout {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+.timer-controls {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+}
+.timer-note {
+  margin: 0;
+  font-size: 0.9rem;
+}
+.timer-work-phase {
+  background: rgba(34, 197, 94, 0.25);
+  border-color: rgba(34, 197, 94, 0.55);
+}
+.timer-rest-phase {
+  background: rgba(56, 189, 248, 0.25);
+  border-color: rgba(56, 189, 248, 0.55);
+}
+
+/* =========================
+   Biblioteca de ejercicios + modal
+   ========================= */
+.exercise-controls {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+.exercise-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.7rem;
+}
+.exercise-card {
+  border: 1px solid rgba(156, 163, 175, 0.25);
+  border-radius: 12px;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.03);
+  display: grid;
+  gap: 0.45rem;
+}
+.exercise-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+.exercise-card h4 {
+  margin: 0;
+  font-size: 1rem;
+}
+.exercise-card p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.exercise-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  z-index: 40;
+}
+.exercise-modal.is-open {
+  display: grid;
+  place-items: center;
+}
+.exercise-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.75);
+  backdrop-filter: blur(2px);
+  animation: fadeIn 180ms ease;
+}
+.exercise-modal-content {
+  position: relative;
+  width: min(680px, 92vw);
+  max-height: 88vh;
+  overflow: auto;
+  border-radius: 16px;
+  padding: 1rem;
+  background: linear-gradient(180deg, var(--surface), var(--surface-2));
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(156, 163, 175, 0.28);
+  animation: modalUp 220ms ease;
+}
+.exercise-modal-close {
+  position: absolute;
+  right: 0.8rem;
+  top: 0.8rem;
+  border: 0;
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+.exercise-modal-meta {
+  font-size: 0.9rem;
+  margin-bottom: 0.45rem;
+}
+.exercise-video-frame {
+  width: 100%;
+  min-height: 280px;
+  border: 0;
+  border-radius: 12px;
+  margin-top: 0.6rem;
+}
+
+@keyframes modalUp {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 700px) {
+  .exercise-controls { grid-template-columns: 1fr; }
+}
