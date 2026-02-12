@@ -11,6 +11,7 @@ const ASSETS = [
   './assets/js/modules/progression.js',
   './assets/js/modules/chart.js',
   './assets/js/modules/onboarding.js',
+  './assets/js/modules/timer.js',
   './manifest.webmanifest',
   './assets/icons/icon.svg'
 ];

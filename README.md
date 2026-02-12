@@ -33,6 +33,7 @@ Plataforma web fitness inspirada en workout.cool, optimizada para principiantes 
             ├── recommendation.js
             ├── progression.js
             ├── onboarding.js
+            ├── timer.js
             └── chart.js
 ```
 
@@ -51,6 +52,7 @@ Plataforma web fitness inspirada en workout.cool, optimizada para principiantes 
 - `recommendation.js`: arma rutina base y aplica progresión automática según historial.
 - `progression.js`: algoritmo de auto-progresión (+5% carga, -10% volumen, deload semana 4, ajuste por nivel).
 - `onboarding.js`: wizard interactivo por pasos con barra de progreso, autosave y validación en vivo.
+- `timer.js`: temporizador de ejercicio/descanso con pausa, anillo SVG animado y sonido suave.
 - `chart.js`: render de gráfico de evolución de peso en canvas.
 - `sw.js`: cache offline y estrategia cache-first con fallback.
 
@@ -69,6 +71,7 @@ Plataforma web fitness inspirada en workout.cool, optimizada para principiantes 
 - Registro de sesiones y evolución en gráfico.
 - Panel de métricas (peso, IMC, grasa estimada, calorías y macros).
 - Historial de entrenamientos.
+- Temporizador por ejercicio y descanso automático con persistencia de tiempo real en historial.
 - PWA instalable + funcionamiento offline.
 - Diseño responsive, premium y amigable para principiantes.
 

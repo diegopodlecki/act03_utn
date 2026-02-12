@@ -4,6 +4,7 @@ import { bmi, estimatedBodyFat, caloriesAndMacros } from './modules/metrics.js';
 import { buildRoutineWithProgression, weeklyProgression } from './modules/recommendation.js';
 import { renderWeightChart } from './modules/chart.js';
 import { createOnboardingWizard } from './modules/onboarding.js';
+import { createTrainingTimer } from './modules/timer.js';
 
 const onboardingEl = document.querySelector('#onboarding');
 const dashboardEl = document.querySelector('#dashboard');
@@ -13,6 +14,15 @@ const routineList = document.querySelector('#routine-list');
 const profileSummary = document.querySelector('#profile-summary');
 const chart = document.querySelector('#progress-chart');
 const themeBtn = document.querySelector('#theme-toggle');
+const timerPanel = document.querySelector('#timer-panel');
+
+let timerController = null;
+let timerSnapshot = {
+  activeExerciseSec: 0,
+  restSec: 0,
+  completedExercises: 0,
+  cycles: 0
+};
 
 init();
 
@@ -61,6 +71,20 @@ async function renderDashboard(profile) {
     profile.injuries ? `· lesiones: ${profile.injuries}` : ''
   }`;
 
+  if (!timerController && timerPanel) {
+    timerController = createTrainingTimer({
+      container: timerPanel,
+      onUpdate: (snapshot) => {
+        timerSnapshot = {
+          activeExerciseSec: snapshot.activeExerciseSec,
+          restSec: snapshot.restSec,
+          completedExercises: snapshot.completedExercises,
+          cycles: snapshot.cycles
+        };
+      }
+    });
+  }
+
   const sessions = await dbApi.getSessions();
   const latestWeight = sessions.at(-1)?.weight ?? profile.weight;
   const bmiVal = bmi(latestWeight, profile.height);
@@ -85,15 +109,23 @@ async function renderDashboard(profile) {
     e.preventDefault();
     const fd = new FormData(e.target);
     try {
+      const timerData = timerController?.getSummary?.() || timerSnapshot;
+
       await dbApi.addSession({
         date: sanitizeText(fd.get('date')),
         weight: toNumber(fd.get('weight'), 30, 350),
         duration: toNumber(fd.get('duration'), 5, 300),
         failCount: toNumber(fd.get('failCount'), 0, 10),
         completedAllSets: fd.get('completedAllSets') === 'on',
-        notes: sanitizeText(fd.get('notes'))
+        notes: sanitizeText(fd.get('notes')),
+        exerciseTimerSec: timerData.activeExerciseSec,
+        restTimerSec: timerData.restSec,
+        timerCycles: timerData.cycles,
+        timerCompletedExercises: timerData.completedExercises
       });
+
       e.target.reset();
+      timerController?.reset?.();
       await renderDashboard(profile);
     } catch (err) {
       alert(`Error al guardar: ${err.message}`);
@@ -130,12 +162,15 @@ function renderHistory(sessions) {
     .slice()
     .reverse()
     .slice(0, 8)
-    .map(
-      (s) =>
-        `<li><strong>${s.date}</strong> · ${s.weight} kg · ${s.duration} min · fallos: ${s.failCount ?? 0}<br><small>${
-          s.completedAllSets ? 'Completó todas las series.' : 'No completó todas las series.'
-        }</small><br><small>${s.notes || 'Sin notas'}</small></li>`
-    )
+    .map((s) => {
+      const work = Math.round((s.exerciseTimerSec || 0) / 60);
+      const rest = Math.round((s.restTimerSec || 0) / 60);
+      return `<li><strong>${s.date}</strong> · ${s.weight} kg · ${s.duration} min · fallos: ${s.failCount ?? 0}<br><small>${
+        s.completedAllSets ? 'Completó todas las series.' : 'No completó todas las series.'
+      }</small><br><small>Timer real: trabajo ${work} min · descanso ${rest} min · ciclos ${s.timerCycles || 0}</small><br><small>${
+        s.notes || 'Sin notas'
+      }</small></li>`;
+    })
     .join('');
 }
 

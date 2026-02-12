@@ -25,6 +25,10 @@
   - `notes: string`
   - `failCount: number`
   - `completedAllSets: boolean`
+  - `exerciseTimerSec: number`
+  - `restTimerSec: number`
+  - `timerCycles: number`
+  - `timerCompletedExercises: number`
 
 ## Justificación
 
